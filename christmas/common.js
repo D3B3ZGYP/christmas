@@ -1,8 +1,4 @@
 /**
- * @typedef {{what: string, who1: string, who2?: string}} PartialElf
- */
-
-/**
  *  Lekérjük a tableselectort, és regisztrálunk egy change eseménykezelőt!
  */
 
@@ -99,7 +95,7 @@ function getSelectElement() {
  * a függvény korán fut le, hiszen a dropdownlist a html-en
  * található 
  * 
- * @param {PartialElf[]} arr az adattömb, ami alapján felépítjük az opciókat
+ * @param {OsztalyFelvetel[]} arr az adattömb, ami alapján felépítjük az opciókat
  * @returns {void}
  */
 function initSelect(arr) {
@@ -108,7 +104,7 @@ function initSelect(arr) {
     createoption(select, "Válassz Manót!"); // ez a függvény még nincs implementálva, görgess lejjebb
 
     for (const i of arr)
-        createoption(select, i.who1, i.who1)
+        createoption(select, i.mano[0], i.mano[0])
 }
 
 /**
@@ -141,23 +137,23 @@ function createoption(selectElement, label, value = "") {
  * Az objektum abban az esetben, ha a "Két manót veszek fel" jelölő négyzet nincs bepipálva,
  * csak az első manó adatait tartalmazza, a másik manóhoz tartozó tulajdonságok nem definiáltak
  * 
- * @param {PartialElf} obj ez az összerakott elem
+ * @param {OsztalyFelvetel} obj ez az összerakott elem
  * @param {HTMLFormElement} form az ürlap
- * @param {PartialElf[]} array az adattömb
+ * @param {OsztalyFelvetel[]} array az adattömb
  * @returns {void}
  */
 function createNewElement(obj, form, array) {
 
     // ez egy ismerős rész, ehhez nem kell nyúlni
     array.push(obj);
-    renderTbody(array);
+    renderTbody("jstbody", array);
     form.reset();
     // ismerős rész vége
 
     const select = getSelectElement()
-    createoption(select, obj.who1, obj.who1)
-    if (obj.who2 != null)
-        createoption(select, obj.who2, obj.who2)
+    createoption(select, obj.mano[0], obj.mano[0])
+    if (obj.mano[1] != null)
+        createoption(select, obj.mano[1], obj.mano[1])
 
     changeCheckboxValue(document.getElementById("masodikmano"))
 }
